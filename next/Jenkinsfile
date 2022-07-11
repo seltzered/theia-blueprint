@@ -7,7 +7,7 @@ distFolder = "applications/electron/dist"
 
 pipeline {
     agent none
-    triggers { cron('@daily') }
+    // triggers { cron('@daily') }
     options {
         timeout(time: 5, unit: 'HOURS')
         disableConcurrentBuilds()
@@ -77,6 +77,7 @@ spec:
                     }
                     steps {
                         script {
+                            sh "npm install --global yarn"
                             buildNext(false, 60)
                         }
                     }
@@ -93,6 +94,7 @@ spec:
                     steps {
                         script {
                             sh "npm config set msvs_version 2017"
+                            sh "npx node-gyp install 14.20.0"
                             buildNext(true, 60)
                         }
                     }
